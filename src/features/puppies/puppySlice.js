@@ -1,4 +1,4 @@
-import api from "../../store/api";
+import api from '../../store/api';
 
 /*
 TODO: Define the following 4 endpoints:
@@ -15,7 +15,44 @@ functions for each endpoint.
 */
 
 const puppyApi = api.injectEndpoints({
-  endpoints: (build) => ({}),
+  endpoints: (build) => ({
+    //Get all puppies
+    getPuppies: build.query({
+      query: () => ({
+        url: '/puppies',
+        method: 'GET',
+      }),
+      providesTags: (result) =>
+        result
+          ? [...result.map(({ id }) => ({ type: 'Puppy', id })), 'Puppy']
+          : ['Puppy'],
+    }),
+    //Get single puppy by id
+    getPuppy: build.query({
+      query: (id) => ({
+        url: `/puppy/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Puppy'],
+    }),
+    //Add puppy
+    addPuppy: build.mutation({
+      query: ({ id, name }) => ({
+        url: `/puppy/${id}`,
+        method: 'PUT',
+        body: { name },
+      }),
+      invalidatesTags: ['Puppy'],
+    }),
+    //Delete puppy
+    deletePuppy: build.mutation({
+      query: (id) => ({
+        url: `/puppy/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, id) => [{ type: 'Puppy', id }],
+    }),
+  }),
 });
 
 export const {
