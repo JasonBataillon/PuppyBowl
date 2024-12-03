@@ -46,6 +46,12 @@ article {
       height: 0;
     }
     article{
+      button{
+        background-color: rgb(250, 213, 145);
+      }
+      button:hover{
+        background-color: aquamarine;
+      }
       flex: 1;
     }
   }

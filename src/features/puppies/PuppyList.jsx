@@ -33,6 +33,7 @@ export default function PuppyList({ setSelectedPuppyId }) {
               <article>
                 <h4>Breed: {p.breed}</h4>
                 <h4>Status: {p.status}</h4>
+                <button onClick={() => viewPuppy(puppy.id)}> View Puppy</button>
               </article>
             </li>
           ))}
