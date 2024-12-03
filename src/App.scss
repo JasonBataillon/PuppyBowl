@@ -28,20 +28,25 @@ article {
   overflow-y: auto;
 }
 
+
 .puppies {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.5rem;
-
   li {
     display: flex;
     flex-flow:column;
     gap: 1ch;
-
+    h3{
+      text-align: center;
+    }
     figure {
-      flex: 1;
+      flex: 3;
       height: 0;
+    }
+    article{
+      flex: 1;
     }
   }
 }
