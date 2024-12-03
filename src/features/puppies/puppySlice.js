@@ -19,7 +19,7 @@ const puppyApi = api.injectEndpoints({
     //Get all puppies
     getPuppies: build.query({
       query: () => ({
-        url: '/puppies',
+        url: '/players',
         method: 'GET',
       }),
       providesTags: (result) =>
@@ -30,24 +30,24 @@ const puppyApi = api.injectEndpoints({
     //Get single puppy by id
     getPuppy: build.query({
       query: (id) => ({
-        url: `/puppy/${id}`,
+        url: `/players/${id}`,
         method: 'GET',
       }),
       providesTags: ['Puppy'],
     }),
     //Add puppy
     addPuppy: build.mutation({
-      query: ({ id, name }) => ({
-        url: `/puppy/${id}`,
-        method: 'PUT',
-        body: { name },
+      query: ({ id, name, breed, imageUrl }) => ({
+        url: `/players`,
+        method: 'POST',
+        body: { name, breed, imageUrl },
       }),
       invalidatesTags: ['Puppy'],
     }),
     //Delete puppy
     deletePuppy: build.mutation({
       query: (id) => ({
-        url: `/puppy/${id}`,
+        url: `/players/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: (result, error, id) => [{ type: 'Puppy', id }],

@@ -1,25 +1,35 @@
 // import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useGetPuppiesQuery } from '../../store/api';
+import { useState, useEffect } from 'react';
+import { useGetPuppiesQuery } from './puppySlice';
 /**
  * @component
  * Shows a list of puppies in the roster.
  * Users can select a puppy to see more information about it.
  */
 export default function PuppyList({ setSelectedPuppyId }) {
+  const [searchQuery, setSearchQuery] = useState('');
   // TODO: Get data from getPuppies query
-  const { data = {}, isLoading, refetch } = useGetPuppiesQuery();
-  if (data) {
-    console.log(data);
-  }
-  // const navigate = useNavigate();
+  const { data = {}, isLoading, error, refetch } = useGetPuppiesQuery();
 
   useEffect(() => {
     refetch();
   }, [refetch]);
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <article>
+      {/* Search Bar */}
+      <div>
+        <input
+          type="text"
+          placeholder="Search puppies..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </div>
       <h2>Roster</h2>
       <ul className="puppies">
         {isLoading && <li>Loading puppies...</li>}
@@ -33,7 +43,11 @@ export default function PuppyList({ setSelectedPuppyId }) {
               <article>
                 <h4>Breed: {p.breed}</h4>
                 <h4>Status: {p.status}</h4>
-                <button onClick={() => viewPuppy(puppy.id)}> View Puppy</button>
+                <button onClick={() => setSelectedPuppyId(p.id)}>
+                  View Puppy
+                </button>
+                {isLoading && <output>Uploading puppy information...</output>}
+                {error && <output>{error.message}</output>}
               </article>
             </li>
           ))}
